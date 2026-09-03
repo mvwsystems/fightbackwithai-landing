@@ -15,12 +15,6 @@ function json(status, body) {
 export default async (request) => {
   if (request.method !== 'POST') return json(405, { error: 'Method not allowed.' });
 
-  const key = process.env.BEEHIIV_API_KEY;
-  if (!key) {
-    console.error('BEEHIIV_API_KEY is not set');
-    return json(503, { error: 'Signup is not configured yet.' });
-  }
-
   let email;
   try {
     const body = await request.json();
@@ -31,6 +25,12 @@ export default async (request) => {
 
   if (!EMAIL.test(email) || email.length > 254) {
     return json(400, { error: 'That address does not look right.' });
+  }
+
+  const key = process.env.BEEHIIV_API_KEY;
+  if (!key) {
+    console.error('BEEHIIV_API_KEY is not set');
+    return json(503, { error: 'Signup is not configured yet.' });
   }
 
   let res, data;

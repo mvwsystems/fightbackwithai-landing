@@ -24,3 +24,11 @@
   for = "/og-image.png"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# The publish dir is the repo root, so the function source would otherwise
+# be served as a static file. It holds no secrets, but it is not public API.
+[[redirects]]
+  from = "/netlify/*"
+  to = "/"
+  status = 404
+  force = true
