@@ -21,11 +21,14 @@ Static landing page for the free weekly newsletter for solopreneurs. No build st
 Update the “This week” teaser under the signup form (marked `Update weekly`). Add a row to the ledger when an issue ships.
 
 ## Deploy
-```bash
-git init && git add . && git commit -m "Landing page v2"
-gh repo create fightbackwithai-landing --public --source=. --push
-```
-Netlify: Add new site → Import from GitHub → no build command → publish directory `.` → deploy. Point `fightbackwithai.com` at it under Domain settings.
+Live at **https://fightbackwithai.netlify.app** — auto-deploys on every push to `main`.
+
+- Repo: `mvwsystems/fightbackwithai-landing`
+- Netlify project: `fightbackwithai` (Superhuman Systems team)
+- No build command; publish directory `.` (set in `netlify.toml`)
+
+Push to `main` and Netlify rebuilds. To put the site on `fightbackwithai.com`, add the
+domain under Netlify → Domain management and follow the DNS instructions.
 
 ## Editing rules
 Read `CLAUDE.md`. Short version: one accent color, two typefaces, square corners, no new components, no hype.
