@@ -40,12 +40,13 @@
     <h1 class="reveal">One Person.<br>Ten Jobs.<br>Fight Back.</h1>
     <p class="lede reveal">The weekly newsletter for solopreneurs. Each issue: one AI skill that takes a job off your plate, what it's worth in hours or dollars, and the move you make tonight.</p>
     <div id="subscribe" class="signup reveal">
-      <!-- BEEHIIV: replace this <form> with your beehiiv embed <iframe>,
-           OR keep the form and set action to https://YOUR-PUBLICATION.beehiiv.com/subscribe -->
-      <form class="signup-row" action="https://YOUR-PUBLICATION.beehiiv.com/subscribe" method="get">
+      <!-- BEEHIIV: JS posts to /api/subscribe (netlify/functions/subscribe.mjs).
+           With JS off, the form falls back to beehiiv's hosted subscribe page. -->
+      <form class="signup-row" action="https://fightbackwithai.beehiiv.com/subscribe" method="get" data-subscribe>
         <input class="email" type="email" name="email" placeholder="Your email address" required autocomplete="email">
         <button class="btn" type="submit">Get the next issue</button>
       </form>
+      <p class="fine signup-msg" data-subscribe-msg role="status" aria-live="polite" hidden></p>
       <p class="fine">No spam. One move a week. Unsubscribe anytime.</p>
     </div>
     <div class="this-week reveal">

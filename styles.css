@@ -74,6 +74,9 @@ h3 { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spac
 .email { flex: 1; min-width: 200px; font-family: var(--sans); font-size: 16px; color: var(--ink); background: var(--white); border: 0; padding: 16px 18px; outline: none; }
 .email::placeholder { color: #9a948c; }
 .signup .fine { margin-top: 14px; font-size: 14px; }
+.signup-msg { margin-top: 14px; font-size: 14px; font-weight: 700; color: var(--ink); }
+.signup-msg.is-error { color: var(--red); }
+.btn[disabled] { opacity: .6; cursor: default; }
 .this-week { border-top: 1px solid var(--rule); margin-top: 44px; padding-top: 22px; max-width: 560px; }
 .teaser { font-style: italic; font-size: 16px; line-height: 1.5; margin-top: 8px; text-wrap: pretty; }
 .hero-card { display: flex; justify-content: center; }
