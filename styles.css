@@ -67,7 +67,7 @@ h3 { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spac
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 34px; }
 
 /* Hero */
-.hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: clamp(40px, 6vw, 80px); align-items: center; padding-top: 64px; padding-bottom: 90px; }
+.hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: clamp(40px, 6vw, 80px); align-items: center; padding-top: 64px; padding-bottom: 90px; }
 .hero-copy { min-width: 0; }
 .signup { margin-top: 34px; max-width: 560px; }
 .signup-row { display: flex; flex-wrap: wrap; border: 1px solid var(--red); background: var(--white); box-shadow: 0 2px 10px rgba(15,15,15,.07); }
@@ -77,6 +77,17 @@ h3 { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spac
 .signup-msg { margin-top: 14px; font-size: 14px; font-weight: 700; color: var(--ink); }
 .signup-msg.is-error { color: var(--red); }
 .btn[disabled] { opacity: .6; cursor: default; }
+
+/* The field and button need about 390px to sit side by side. Below that the
+   button would wrap to a short second line, so stack them full-width instead.
+   Keyed to the form's own width, so it holds on narrow phones and on the
+   ~810-935px band where the two-column hero squeezes this column. */
+.signup { container-type: inline-size; }
+@container (max-width: 400px) {
+  .signup-row { flex-direction: column; }
+  .email { min-width: 0; }
+  .signup-row .btn { justify-content: center; }
+}
 .this-week { border-top: 1px solid var(--rule); margin-top: 44px; padding-top: 22px; max-width: 560px; }
 .teaser { font-style: italic; font-size: 16px; line-height: 1.5; margin-top: 8px; text-wrap: pretty; }
 .hero-card { display: flex; justify-content: center; }
@@ -152,4 +163,9 @@ h3 { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spac
   .ledger-head { display: none; }
   .ledger-row { grid-template-columns: 48px minmax(0, 1fr); }
   .ledger-row b { grid-column: 2; }
+  /* The button cannot sit beside the field at this width, so stack them
+     full-width rather than let it wrap to a short second line. */
+  .signup-row { flex-direction: column; }
+  .email { min-width: 0; }
+  .signup-row .btn { justify-content: center; }
 }
