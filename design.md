@@ -14,7 +14,9 @@ Hover: crimson ↔ ink swap. Selection: crimson ground, cream text. No gradients
 
 ## Type
 Google Fonts: Archivo (400/500/600/700, italics) and Archivo Black.
-- Display: Archivo Black 400, Title Case, line-height .96–1.05, letter-spacing −.025em (large) to −.01em (small). H1 `clamp(52px, 7.2vw, 104px)`; H2 `clamp(34px, 4.4vw, 54px)`; CTA H2 `clamp(40px, 5.6vw, 76px)`; H3 21px; numerals 13–19px.
+- Display: Archivo Black 400, Title Case, line-height .96–1.05, letter-spacing −.025em (large) to −.01em (small). H1 `clamp(52px, min(7.2vw, 15.5cqi), 104px)` — the `cqi` term sizes it against the hero
+copy column (a container), which stops growing at ~512px once `.wrap` hits its 1200px cap; without it the
+three `<br>` lines break apart on laptops; H2 `clamp(34px, 4.4vw, 54px)`; CTA H2 `clamp(40px, 5.6vw, 76px)`; H3 21px; numerals 13–19px.
 - Body: Archivo 400, 15–19px, line-height 1.55–1.6. `text-wrap: pretty`.
 - Eyebrow: Archivo 700, 11px, letter-spacing .18em, uppercase, crimson.
 - Meta: Archivo 600, 10px, letter-spacing .16em, muted.
