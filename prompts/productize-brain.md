@@ -25,7 +25,7 @@ Not the client: agencies with teams, people with no repeatable method yet, tool 
 
 ## Engagement phase: Founding Ten
 
-The first ten engagements are free. The client pays in access, responsiveness, and a documented case study Matt can publish (business details anonymized on request). Score fit on **case-study value** as much as pain: visible IP, a clear before/after in hours and revenue, a client who will actually grant access and show up. Do not discuss pricing the engagement. Product-ladder pricing for the client's own offers still applies in full.
+The first ten engagements are free. The client pays in access, responsiveness, a documented case study Matt publishes, and an honest, detailed LinkedIn review. Nothing is anonymized — going on the record is part of the deal, so treat willingness to be named as a hard requirement, not a nice-to-have. Score fit on **case-study value** as much as pain: visible IP, a clear before/after in hours and revenue, a client who will actually grant access and show up. Do not discuss pricing the engagement. Product-ladder pricing for the client's own offers still applies in full.
 
 ## What the engagement produces
 
