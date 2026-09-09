@@ -43,6 +43,14 @@
   status = 404
   force = true
 
+# The Productize Brain is the system prompt, not public API. The function reads
+# it from the bundle (included_files), so blocking HTTP access is safe.
+[[redirects]]
+  from = "/prompts/*"
+  to = "/"
+  status = 404
+  force = true
+
 [functions]
   node_bundler = "esbuild"
   included_files = ["prompts/productize-brain.md"]

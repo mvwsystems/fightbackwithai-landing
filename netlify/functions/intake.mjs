@@ -101,7 +101,12 @@ export default async (req) => {
   if (intake.company_fax) return json({ ok: true }); // honeypot
 
   let analysis = null, analysisError = null;
-  try { analysis = await analyze(intake); } catch (e) { analysisError = e.message; }
+  try {
+    analysis = await analyze(intake);
+  } catch (e) {
+    analysisError = e.message;
+    console.error("Anthropic analysis failed:", e.message);
+  }
 
   try {
     await sendEmail({ intake, analysis, analysisError });
