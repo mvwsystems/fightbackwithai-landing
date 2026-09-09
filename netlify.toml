@@ -42,3 +42,13 @@
   to = "/"
   status = 404
   force = true
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["prompts/productize-brain.md"]
+
+# Clean URL for the intake page
+[[redirects]]
+  from = "/intake"
+  to = "/intake.html"
+  status = 200

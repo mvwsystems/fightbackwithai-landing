@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Productize + Automate Intake — Fight Back with AI</title>
+<meta name="description" content="Show me the mess. I'll make the plan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* FBWA Design Brief v2 — flat editorial. Radius 0. No gradients. */
+  /* Tokens mirror styles.css exactly. Six colours, two faces, nothing else.
+     Kept inline rather than linking styles.css: .col, .wrap, .fine, .label
+     and .meta are defined there too and would break this page's form. */
+  :root{
+    --ground:#f4f2ee;
+    --ink:#0f0f0f;
+    --red:#c1121f;
+    --rule:#d8d2c8;
+    --muted:#5a554f;
+    --white:#ffffff;
+    --display:'Archivo Black', Archivo, sans-serif;
+    --sans:Archivo, sans-serif;
+    --wrap:1200px;
+    --gutter:clamp(20px, 4vw, 48px);
+  }
+  *{box-sizing:border-box}
+  html{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  body{margin:0}
+  ::selection{background:var(--red);color:var(--ground)}
+  a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red);padding-bottom:2px}
+  a:hover{border-color:var(--ink);color:var(--red)}
+
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:34px var(--gutter) 90px}
+  .col{max-width:680px}
+
+  /* wordmark */
+  .mark{display:inline-flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.06em;font-size:15px;border:0;padding:0}
+  .mark svg{width:13px;height:auto;color:var(--red)}
+  .done .mark svg{color:var(--ground)}
+  footer .mark svg{color:var(--ink)}
+  .mark b{color:var(--red);font-weight:700}
+
+  .caps{font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+  .caps.meta{color:var(--muted)}
+
+  header{padding:90px 0 60px}
+  h1{font-family:var(--display);font-weight:400;font-size:clamp(52px,7.2vw,104px);line-height:.98;letter-spacing:-.02em;margin:18px 0 30px}
+  h1 span{display:block;color:var(--red)}
+  header p{font-size:19px;line-height:1.5;color:var(--muted);margin:0 0 14px;max-width:34em;text-wrap:pretty}
+  header p.ink{color:var(--ink)}
+
+  /* progress rail — the accent slot rule, one rust segment per set */
+  .rail{position:sticky;top:0;background:var(--ground);padding:14px 0 12px;z-index:5;border-bottom:1px solid var(--rule)}
+  .rail ol{list-style:none;margin:0;padding:0;display:flex;gap:8px;max-width:680px}
+  .rail li{flex:1;border-top:2px solid var(--rule)}
+  .rail li.done{border-color:var(--ink)}
+  .rail li.now{border-color:var(--red)}
+  .rail .label{margin-top:10px}
+
+  section.step{padding:70px 0 20px;border-bottom:1px solid var(--rule)}
+  section.step:last-of-type{border-bottom:0}
+  .step h2{font-family:var(--display);font-weight:400;font-size:clamp(34px,4.2vw,52px);line-height:1;letter-spacing:-.015em;margin:12px 0 14px}
+  .step > p{color:var(--muted);margin:0 0 34px;max-width:36em;font-size:18px}
+
+  .f{margin:0 0 24px}
+  .f label,.f legend{display:block;font-weight:700;margin:0 0 6px;padding:0}
+  .f .hint{display:block;font-weight:400;color:var(--muted);font-size:15px;margin:0 0 8px}
+  .f input[type=text],.f input[type=email],.f input[type=url],.f input[type=tel],.f textarea,.f select{
+    width:100%;font:inherit;color:var(--ink);background:var(--white);border:1px solid var(--ink);border-radius:0;padding:12px 14px}
+  .f select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230f0f0f' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+  .f textarea{min-height:120px;resize:vertical}
+  .f input:focus,.f textarea:focus,.f select:focus{outline:2px solid var(--red);outline-offset:0;border-color:var(--red)}
+  .f input[aria-invalid=true],.f textarea[aria-invalid=true]{border:2px solid var(--red)}
+  .req{color:var(--red)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,24px)}
+  @media (max-width:560px){.row{grid-template-columns:1fr}}
+
+  fieldset{border:0;margin:0;padding:0}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+  @media (max-width:560px){.choices{grid-template-columns:1fr}}
+  .choices label{display:flex;gap:10px;align-items:flex-start;font-weight:400;cursor:pointer;padding:12px 14px;border:1px solid var(--rule);background:var(--white);margin:0}
+  .choices label:hover{border-color:var(--ink)}
+  .choices label:has(input:checked){border-color:var(--ink);box-shadow:0 2px 10px rgba(15,15,15,.07)}
+  .choices label:has(input:focus-visible){outline:2px solid var(--red)}
+  .choices input{margin:4px 0 0;accent-color:var(--red);flex:none}
+
+  .rank{margin:8px 0 0;padding:0;list-style:none}
+  .rank li{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+  .rank li span{font-family:var(--display);font-size:18px;width:28px;flex:none;color:var(--red)}
+
+  .actions{margin-top:40px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  button.primary{font:inherit;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:14px;background:var(--red);color:var(--ground);border:1px solid var(--red);border-radius:0;padding:16px 26px;cursor:pointer}
+  button.primary:hover{background:var(--ink);border-color:var(--ink)}
+  button.primary:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  button.primary[disabled]{opacity:.6;cursor:progress}
+  .fine{font-size:15px;color:var(--muted)}
+
+  .status{margin-top:18px;padding:14px 16px;border-left:2px solid var(--red);background:var(--white);display:none}
+  .status.err{display:block}
+  .status.ok{display:block;border-color:var(--ink)}
+
+  /* inverted done state — ink ground, cream type, rust accent */
+  .done{display:none;background:var(--ink);color:var(--ground);padding:clamp(34px,4vw,56px);margin-top:40px}
+  .done .mark{color:var(--ground)}
+  .done .mark b{color:var(--red)}
+  .done h2{font-family:var(--display);font-weight:400;font-size:clamp(34px,5.6vw,76px);line-height:1;letter-spacing:-.02em;margin:26px 0 20px}
+  .done p{color:var(--ground);opacity:.85;max-width:34em;margin:0 0 12px}
+  .done hr{border:0;border-top:1px solid rgba(244,242,238,.25);margin:26px 0 18px}
+  .done a{color:var(--ground);border-color:var(--red)}
+  .done .caps{color:var(--red)}
+
+  footer{border-top:1px solid var(--ink);margin-top:90px;padding:26px 0 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+  .honey{position:absolute;left:-9999px}
+  @media (prefers-reduced-motion:no-preference){.rail li{transition:border-color .2s}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="mark" href="/" aria-label="Fight Back with AI, home">
+    <svg viewBox="0 0 120 200" aria-hidden="true"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
+    FIGHT BACK WITH <b>AI</b>
+  </a>
+
+  <header class="col">
+    <span class="caps">Productize + Automate · Intake</span>
+    <h1>Show Me the Mess. <span>I'll Make the Plan.</span></h1>
+    <p>Don't clean anything up first. The half-built course, the scattered files, the thing you've meant to finish for two years. That's the raw material.</p>
+    <p class="ink">You get a first-pass analysis and roadmap back before we ever get on a call.</p>
+    <p class="ink">The first ten consultants get the full engagement at no charge. In return I document the work and publish what I learn, with your business details kept private.</p>
+    <span class="caps meta">About 20 minutes · No save-as-you-go · Finish in one sitting</span>
+  </header>
+
+  <nav class="rail" aria-label="Progress">
+    <ol id="rail"><li class="now"></li><li></li><li></li><li></li><li></li></ol>
+    <div class="label caps meta" id="railLabel">1 of 5 · You and Your Business</div>
+  </nav>
+
+  <form id="intake" class="col" novalidate>
+    <input class="honey" type="text" name="company_fax" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <section class="step" data-step="1">
+      <span class="caps">Step 1 of 5</span>
+      <h2>You and Your Business</h2>
+      <p>The basics, plus what you actually do for people.</p>
+
+      <div class="row">
+        <div class="f"><label for="name">Your name <span class="req">*</span></label><input id="name" name="name" type="text" required autocomplete="name"></div>
+        <div class="f"><label for="email">Email <span class="req">*</span></label><input id="email" name="email" type="email" required autocomplete="email"></div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="phone">Mobile <span class="req">*</span></label><span class="hint">I'll text to schedule the call.</span><input id="phone" name="phone" type="tel" required autocomplete="tel"></div>
+        <div class="f"><label for="business">Business name</label><span class="hint">If it has one.</span><input id="business" name="business" type="text" autocomplete="organization"></div>
+      </div>
+      <div class="f"><label for="website">Website or main link</label><input id="website" name="website" type="url" placeholder="https://"></div>
+
+      <div class="f">
+        <label for="what">What do you do, and for whom? <span class="req">*</span></label>
+        <span class="hint">Explain it like you would to a smart friend at dinner. Two to five sentences.</span>
+        <textarea id="what" name="what_you_do" required></textarea>
+      </div>
+      <div class="f">
+        <label for="journey">Walk me through a client, start to finish.</label>
+        <span class="hint">How they find you, what happens on the first call, what you deliver, how it ends.</span>
+        <textarea id="journey" name="client_journey"></textarea>
+      </div>
+      <div class="row">
+        <div class="f">
+          <label for="years">How long have you done this?</label>
+          <select id="years" name="years"><option value="">Choose</option><option>Under 1 year</option><option>1–3 years</option><option>3–7 years</option><option>7+ years</option></select>
+        </div>
+        <div class="f">
+          <label for="rev">Rough annual revenue</label>
+          <span class="hint">Optional. Helps me size the offers I build for you.</span>
+          <select id="rev" name="revenue_band"><option value="">Prefer not to say</option><option>Under $50k</option><option>$50k–$150k</option><option>$150k–$400k</option><option>$400k–$1M</option><option>$1M+</option></select>
+        </div>
+      </div>
+      <div class="f">
+        <label for="offers">What do you sell right now, and at what price? <span class="req">*</span></label>
+        <span class="hint">List them. "1:1 coaching, $2k/mo. Half-day workshop, $5k. Retainer, $3.5k/mo."</span>
+        <textarea id="offers" name="current_offers" required></textarea>
+      </div>
+    </section>
+
+    <section class="step" data-step="2">
+      <span class="caps">Step 2 of 5</span>
+      <h2>Your Files and Your IP</h2>
+      <p>Where everything lives and what's buried in it.</p>
+
+      <div class="f">
+        <fieldset>
+          <legend>Where does your stuff live?</legend>
+          <span class="hint">Check everything that applies.</span>
+          <div class="choices">
+            <label><input type="checkbox" name="storage" value="Google Drive">Google Drive</label>
+            <label><input type="checkbox" name="storage" value="Dropbox">Dropbox</label>
+            <label><input type="checkbox" name="storage" value="OneDrive / SharePoint">OneDrive or SharePoint</label>
+            <label><input type="checkbox" name="storage" value="Notion">Notion</label>
+            <label><input type="checkbox" name="storage" value="Notes app / local">Notes app or local folders</label>
+            <label><input type="checkbox" name="storage" value="Course platform">Course platform (Kajabi, Teachable, Skool, Thinkific)</label>
+            <label><input type="checkbox" name="storage" value="Recorded calls">Recorded calls (Zoom, Loom, Fathom, Otter)</label>
+            <label><input type="checkbox" name="storage" value="Email">Email, the real archive</label>
+            <label><input type="checkbox" name="storage" value="Social / newsletter">Social or newsletter archive</label>
+            <label><input type="checkbox" name="storage" value="My head">Mostly in my head</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="f">
+        <label for="platforms">Name the tools and platforms.</label>
+        <span class="hint">Course host, newsletter, CRM, calendar, invoicing, project tool. Anything with your content or clients in it.</span>
+        <textarea id="platforms" name="platforms"></textarea>
+      </div>
+      <div class="f">
+        <label for="ip">What have you made more than once? <span class="req">*</span></label>
+        <span class="hint">Frameworks, checklists, decks, worksheets, email templates, a talk, a process you always run. Rough is fine.</span>
+        <textarea id="ip" name="repeat_assets" required></textarea>
+      </div>
+      <div class="f">
+        <label for="halfbuilt">What's half-built or abandoned?</label>
+        <span class="hint">The course you started. The book outline. The program you ran once. What it was and how far it got.</span>
+        <textarea id="halfbuilt" name="half_built"></textarea>
+      </div>
+      <div class="f">
+        <label for="deliverables">Your last 5–10 deliverables</label>
+        <span class="hint">Proposals, reports, decks, session notes. Paste links or describe them.</span>
+        <textarea id="deliverables" name="recent_deliverables"></textarea>
+      </div>
+      <div class="f">
+        <label for="links">Links</label>
+        <span class="hint">Shared folders, sales pages, course previews, YouTube. One per line.</span>
+        <textarea id="links" name="links"></textarea>
+      </div>
+    </section>
+
+    <section class="step" data-step="3">
+      <span class="caps">Step 3 of 5</span>
+      <h2>Your Time</h2>
+      <p>What eats the week. Honest, not aspirational.</p>
+
+      <div class="f">
+        <fieldset>
+          <legend>Which of these do you do every week? <span class="req">*</span></legend>
+          <div class="choices">
+            <label><input type="checkbox" name="tasks" value="Discovery / intake calls">Discovery or intake calls</label>
+            <label><input type="checkbox" name="tasks" value="Writing proposals">Writing proposals or quotes</label>
+            <label><input type="checkbox" name="tasks" value="Client onboarding">Client onboarding</label>
+            <label><input type="checkbox" name="tasks" value="Session notes and follow-up">Session notes and follow-up emails</label>
+            <label><input type="checkbox" name="tasks" value="Scheduling">Scheduling and rescheduling</label>
+            <label><input type="checkbox" name="tasks" value="Content creation">Content (posts, newsletter, video)</label>
+            <label><input type="checkbox" name="tasks" value="Invoicing and chasing payment">Invoicing and chasing payment</label>
+            <label><input type="checkbox" name="tasks" value="Reporting">Client reports or progress updates</label>
+            <label><input type="checkbox" name="tasks" value="Research and prep">Research and prep before calls</label>
+            <label><input type="checkbox" name="tasks" value="Inbox">Inbox and DMs</label>
+            <label><input type="checkbox" name="tasks" value="Bookkeeping">Bookkeeping</label>
+            <label><input type="checkbox" name="tasks" value="Lead follow-up">Lead follow-up and nurture</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="f">
+        <label>Rank your three biggest time sinks <span class="req">*</span></label>
+        <span class="hint">Type them in. They don't have to match the list above.</span>
+        <ol class="rank">
+          <li><span>1</span><input type="text" name="sink_1" required aria-label="Biggest time sink"></li>
+          <li><span>2</span><input type="text" name="sink_2" aria-label="Second time sink"></li>
+          <li><span>3</span><input type="text" name="sink_3" aria-label="Third time sink"></li>
+        </ol>
+      </div>
+      <div class="row">
+        <div class="f">
+          <label for="hrs_admin">Hours a week on admin and ops</label>
+          <select id="hrs_admin" name="hours_admin"><option value="">Estimate</option><option>Under 5</option><option>5–10</option><option>10–20</option><option>20+</option></select>
+        </div>
+        <div class="f">
+          <label for="hrs_deliver">Hours a week delivering to clients</label>
+          <select id="hrs_deliver" name="hours_delivery"><option value="">Estimate</option><option>Under 10</option><option>10–20</option><option>20–35</option><option>35+</option></select>
+        </div>
+      </div>
+      <div class="f">
+        <label for="tried">What have you already tried to automate or delegate?</label>
+        <span class="hint">VA, Zapier, ChatGPT, templates. What worked, what didn't, what you gave up on.</span>
+        <textarea id="tried" name="tried_before"></textarea>
+      </div>
+      <div class="f">
+        <fieldset>
+          <legend>Comfort with AI tools right now</legend>
+          <div class="choices">
+            <label><input type="radio" name="ai_level" value="Rarely use it">Rarely use it</label>
+            <label><input type="radio" name="ai_level" value="ChatGPT for drafts">ChatGPT or Claude for drafts</label>
+            <label><input type="radio" name="ai_level" value="Some automations running">A few automations running</label>
+            <label><input type="radio" name="ai_level" value="Deep in it">Deep in it, want it done right</label>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <section class="step" data-step="4">
+      <span class="caps">Step 4 of 5</span>
+      <h2>Money and Where This Goes</h2>
+      <p>What you'd sell if hours weren't the limit.</p>
+
+      <div class="f">
+        <label for="wish">What do you wish you could sell without adding hours? <span class="req">*</span></label>
+        <span class="hint">The thing people keep asking for. The course you'd make with a free month. The group program. Be specific.</span>
+        <textarea id="wish" name="wish_to_sell" required></textarea>
+      </div>
+      <div class="f">
+        <label for="asked">What do clients ask for that you don't offer yet?</label>
+        <textarea id="asked" name="unmet_requests"></textarea>
+      </div>
+      <div class="f">
+        <label for="goal">Twelve months from now, what's different? <span class="req">*</span></label>
+        <span class="hint">Revenue, hours, kind of client, kind of work. Numbers welcome.</span>
+        <textarea id="goal" name="twelve_month_goal" required></textarea>
+      </div>
+      <div class="f">
+        <label for="done">What would make this a clear win for you?</label>
+        <textarea id="done" name="definition_of_win"></textarea>
+      </div>
+      <div class="f">
+        <label for="timeline">When do you want this done?</label>
+        <select id="timeline" name="timeline"><option value="">Choose</option><option>Next 30 days</option><option>Next 60 days</option><option>This quarter</option><option>No rush, want it right</option></select>
+      </div>
+    </section>
+
+    <section class="step" data-step="5">
+      <span class="caps">Step 5 of 5</span>
+      <h2>Access and the Call</h2>
+      <p>I build in your accounts, on your subscriptions. You own everything.</p>
+
+      <div class="f">
+        <fieldset>
+          <legend>Which of these are you open to giving me read access to? <span class="req">*</span></legend>
+          <span class="hint">Nothing happens until we talk. This tells me what's possible.</span>
+          <div class="choices">
+            <label><input type="checkbox" name="access" value="File storage">File storage (Drive, Dropbox, Notion)</label>
+            <label><input type="checkbox" name="access" value="Course platform">Course platform</label>
+            <label><input type="checkbox" name="access" value="Email">Email</label>
+            <label><input type="checkbox" name="access" value="Calendar">Calendar</label>
+            <label><input type="checkbox" name="access" value="CRM">CRM</label>
+            <label><input type="checkbox" name="access" value="Invoicing">Invoicing or payments</label>
+            <label><input type="checkbox" name="access" value="Call recordings">Call recordings</label>
+            <label><input type="checkbox" name="access" value="Not yet">Not yet. Let's talk first.</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="f">
+        <label for="timelog">Will you keep a rough time log for one week before our call?</label>
+        <span class="hint">A note on your phone: what you did, roughly how long. It's the single most useful thing you can give me.</span>
+        <select id="timelog" name="time_log"><option value="">Choose</option><option>Yes</option><option>I'll try</option><option>No, use my calendar and sent mail instead</option></select>
+      </div>
+      <div class="f">
+        <label for="availability">Good times for a 60–90 minute Zoom</label>
+        <span class="hint">Days, time windows, time zone. I'll text you to lock it in.</span>
+        <textarea id="availability" name="availability"></textarea>
+      </div>
+      <div class="f">
+        <label for="anything">Anything else I should know?</label>
+        <textarea id="anything" name="anything_else"></textarea>
+      </div>
+      <div class="f">
+        <label for="source">How did you find this?</label>
+        <input id="source" name="source" type="text">
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="primary" id="submitBtn">Send My Intake</button>
+        <span class="fine">Goes straight to Matt. You'll hear back within two business days.</span>
+      </div>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+    </section>
+  </form>
+
+  <section class="done col" id="done">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 120 200"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
+      FIGHT BACK WITH <b>AI</b>
+    </span>
+    <h2>Got It.</h2>
+    <p>Your answers are in. I'll read everything, run the first-pass analysis, and text you to set up the call.</p>
+    <p>If you said yes to the time log, start it tomorrow morning.</p>
+    <hr>
+    <span class="caps">Questions in the meantime</span>
+    <p style="margin-top:8px"><a href="mailto:hello@6signal.co">hello@6signal.co</a></p>
+  </section>
+
+  <footer>
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 120 200"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
+      FIGHT BACK WITH <b>AI</b>
+    </span>
+    <span class="caps meta">Matt Vincent Walker · Fort Worth, Texas</span>
+  </footer>
+</main>
+
+<script>
+(function(){
+  // Submissions go to the Netlify function at /api/intake (Claude analysis + email to Matt).
+  // No-backend fallback: set ENDPOINT to a Formspree URL, e.g. "https://formspree.io/f/xxxxxxx".
+  const ENDPOINT = "/api/intake"; // Netlify function, see netlify/functions/intake.mjs
+
+  const form = document.getElementById('intake');
+  const steps = [...document.querySelectorAll('section.step')];
+  const rail = [...document.querySelectorAll('#rail li')];
+  const railLabel = document.getElementById('railLabel');
+  const labels = ['You and Your Business','Your Files and Your IP','Your Time','Money and Where This Goes','Access and the Call'];
+
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const i = steps.indexOf(e.target);
+      rail.forEach((li,j)=>{ li.className = j<i?'done':(j===i?'now':''); });
+      railLabel.textContent = (i+1)+' of 5 · '+labels[i];
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  steps.forEach(s=>io.observe(s));
+
+  function collect(){
+    const fd = new FormData(form);
+    const out = {};
+    for(const [k,v] of fd.entries()){
+      if(k==='company_fax') continue;
+      if(out[k]!==undefined){ out[k] = [].concat(out[k], v); } else { out[k] = v; }
+    }
+    ['storage','tasks','access'].forEach(k=>{ if(out[k]===undefined) out[k]=[]; else if(!Array.isArray(out[k])) out[k]=[out[k]]; });
+    out.submitted_at = new Date().toISOString();
+    out.page = location.href;
+    return out;
+  }
+
+  function validate(){
+    let first = null;
+    form.querySelectorAll('[required]').forEach(el=>{
+      const bad = !el.value.trim();
+      el.setAttribute('aria-invalid', bad?'true':'false');
+      if(bad && !first) first = el;
+    });
+    ['tasks','access'].forEach(name=>{
+      const group = form.querySelectorAll('input[name="'+name+'"]');
+      const any = [...group].some(c=>c.checked);
+      group.forEach(c=>c.closest('label').style.borderColor = any?'':'var(--red)');
+      if(!any && !first) first = group[0];
+    });
+    return first;
+  }
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const status = document.getElementById('status');
+    status.className='status';
+    if(form.company_fax.value){ return; }
+    const bad = validate();
+    if(bad){
+      status.className='status err';
+      status.textContent='A few required answers are missing. They are outlined in red.';
+      bad.scrollIntoView({behavior:'smooth',block:'center'}); bad.focus({preventScroll:true});
+      return;
+    }
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent='Sending';
+    try{
+      const res = await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(collect())});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      form.style.display='none';
+      document.querySelector('.rail').style.display='none';
+      document.getElementById('done').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(err){
+      status.className='status err';
+      status.innerHTML='Couldn\'t send. Check your connection and try again, or email your answers to <a href="mailto:hello@6signal.co">hello@6signal.co</a>.';
+      btn.disabled=false; btn.textContent='Send My Intake';
+    }
+  });
+})();
+</script>
+</body>
+</html>
