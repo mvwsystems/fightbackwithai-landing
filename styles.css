@@ -89,7 +89,7 @@ h3 { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spac
 @container (max-width: 400px) {
   .signup-row { flex-direction: column; }
   .email { min-width: 0; }
-  .signup-row .btn { justify-content: center; }
+  .signup-row .btn { width: 100%; justify-content: center; }
 }
 .this-week { border-top: 1px solid var(--rule); margin-top: 44px; padding-top: 22px; max-width: 560px; }
 .teaser { font-style: italic; font-size: 16px; line-height: 1.5; margin-top: 8px; text-wrap: pretty; }
@@ -171,5 +171,5 @@ h3 { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spac
      full-width rather than let it wrap to a short second line. */
   .signup-row { flex-direction: column; }
   .email { min-width: 0; }
-  .signup-row .btn { justify-content: center; }
+  .signup-row .btn { width: 100%; justify-content: center; }
 }
