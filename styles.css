@@ -81,6 +81,17 @@ h3 { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spac
 .signup-msg.is-error { color: var(--red); }
 .btn[disabled] { opacity: .6; cursor: default; }
 
+/* Waitlist form. .signup-row fits one field beside a button; this stacks three.
+   Same tokens, same square corners, no new colours. */
+.wl-form { display: grid; gap: 18px; max-width: 560px; }
+.wl-field { display: grid; gap: 6px; }
+.wl-field label { font-weight: 700; font-size: 14px; }
+.wl-field .hint { font-weight: 400; font-size: 13px; color: var(--muted); }
+.wl-input { width: 100%; font-family: var(--sans); font-size: 16px; color: var(--ink); background: var(--white); border: 1px solid var(--ink); padding: 14px 16px; }
+.wl-input::placeholder { color: #9a948c; }
+.wl-input:focus { outline: 2px solid var(--red); outline-offset: 0; border-color: var(--red); }
+.wl-honey { position: absolute; left: -9999px; }
+
 /* The field and button need about 390px to sit side by side. Below that the
    button would wrap to a short second line, so stack them full-width instead.
    Keyed to the form's own width, so it holds on narrow phones and on the

@@ -42,6 +42,22 @@ Plain static site. `index.html` + `styles.css` + `script.js`. No build step, no 
   `.wrap`, `.fine`, `.label` and `.meta` exist in both and would break the form. Its `:root`
   mirrors the six tokens exactly — if you change a token in `styles.css`, change it here too.
 
+## Waitlist page (/waitlist)
+- `waitlist.html` at the root, served at `/waitlist` via a rewrite. It links `styles.css`
+  and reuses the landing page components; the only new CSS is the `.wl-*` block, because
+  `.signup-row` fits one field beside a button and this form stacks three.
+- `netlify/functions/waitlist.mjs` handles `POST /api/waitlist`. Looks the address up by
+  email, then creates (welcome email on) or updates (welcome email off) so nobody is
+  duplicated or welcomed twice.
+- Waitlist signups are separated by `utm_source=waitlist-page`, which beehiiv stores as
+  `acquisition_source`. Subscriber tags are deliberately not used: the publication is on
+  the free Launch plan. Filter or segment on acquisition source in the beehiiv UI.
+- `custom_fields` (`community_waitlist`, `first_name`, `ai_job`) are sent optimistically.
+  beehiiv discards names that do not exist on the publication, so the signup works whether
+  or not they have been created. Until they exist, those answers are not stored anywhere.
+- Env vars: `BEEHIIV_API_KEY`, `BEEHIIV_PUBLICATION_ID`. Both must carry a value in the
+  context you are running in — a name with an empty value reads as unconfigured.
+
 ## Copy calibration
 These lines are the register. New copy must sit beside them without embarrassing them:
 - “If we can't put a number on it, we don't send it.”

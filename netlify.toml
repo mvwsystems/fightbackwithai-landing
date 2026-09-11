@@ -69,3 +69,9 @@
   from = "/brand"
   to = "/design-brief.html"
   status = 200
+
+# Clean URL for the community waitlist
+[[redirects]]
+  from = "/waitlist"
+  to = "/waitlist.html"
+  status = 200
