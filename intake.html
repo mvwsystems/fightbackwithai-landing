@@ -7,67 +7,52 @@
 <meta name="description" content="Show me the mess. I'll make the plan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=2">
 <style>
-  /* FBWA Design Brief v2 — flat editorial. Radius 0. No gradients. */
-  /* Tokens mirror styles.css exactly. Six colours, two faces, nothing else.
-     Kept inline rather than linking styles.css: .col, .wrap, .fine, .label
-     and .meta are defined there too and would break this page's form. */
-  :root{
-    --ground:#f4f2ee;
-    --ink:#0f0f0f;
-    --red:#c1121f;
-    --rule:#d8d2c8;
-    --muted:#5a554f;
-    --white:#ffffff;
-    --display:'Archivo Black', Archivo, sans-serif;
-    --sans:Archivo, sans-serif;
-    --wrap:1200px;
-    --gutter:clamp(20px, 4vw, 48px);
+  /* Page-specific rules only. Tokens, type scale, wordmark, bolt, buttons,
+     links and tracked caps all come from styles.css. Everything below is
+     either unique to this form or a scoped correction to a shared component. */
+
+  main.wrap { padding-top: 34px; padding-bottom: 90px; }
+  .ik-col { max-width: 680px; }
+  /* The shared h1 rule sizes type against its column, so to get the same
+     headline size as the landing page the header has to be the same measure as
+     that page's hero copy column. Above ~790px the hero is two columns and that
+     column works out to 43vw, capped by the 1200px wrap at 512px. Below 790px
+     the hero collapses to one column, the vw term binds on both pages, and no
+     cap is needed. The form below stays 680. */
+  header.ik-col { container-type: inline-size; }
+  @media (min-width: 791px) {
+    header.ik-col { max-width: min(43vw, 512px); }
   }
-  *{box-sizing:border-box}
-  html{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
-  body{margin:0}
-  ::selection{background:var(--red);color:var(--ground)}
-  a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red);padding-bottom:2px}
-  a:hover{border-color:var(--ink);color:var(--red)}
+  /* .meta is nowrap elsewhere, where the strings are two or three words.
+     Here they are sentences. */
+  .meta { white-space: normal; }
 
-  .wrap{max-width:var(--wrap);margin:0 auto;padding:34px var(--gutter) 90px}
-  .col{max-width:680px}
+  header { padding: 90px 0 60px; }
+  header h1 { margin: 18px 0 30px; }
+  h1 span { display: block; color: var(--red); }
+  header p { font-size: 19px; line-height: 1.5; color: var(--muted); margin: 0 0 14px; max-width: 34em; text-wrap: pretty; }
+  header p.ink { color: var(--ink); }
 
-  /* wordmark */
-  .mark{display:inline-flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.06em;font-size:15px;border:0;padding:0}
-  .mark svg{width:13px;height:auto;color:var(--red)}
-  .done .mark svg{color:var(--ground)}
-  footer .mark svg{color:var(--ink)}
-  .mark b{color:var(--red);font-weight:700}
-
-  .caps{font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
-  .caps.meta{color:var(--muted)}
-
-  header{padding:90px 0 60px}
-  h1{font-family:var(--display);font-weight:400;font-size:clamp(52px,7.2vw,104px);line-height:.98;letter-spacing:-.02em;margin:18px 0 30px}
-  h1 span{display:block;color:var(--red)}
-  header p{font-size:19px;line-height:1.5;color:var(--muted);margin:0 0 14px;max-width:34em;text-wrap:pretty}
-  header p.ink{color:var(--ink)}
-
-  /* progress rail — the accent slot rule, one rust segment per set */
+  /* progress rail — the accent slot rule, one crimson segment per set */
   .rail{position:sticky;top:0;background:var(--ground);padding:14px 0 12px;z-index:5;border-bottom:1px solid var(--rule)}
   .rail ol{list-style:none;margin:0;padding:0;display:flex;gap:8px;max-width:680px}
   .rail li{flex:1;border-top:2px solid var(--rule)}
   .rail li.done{border-color:var(--ink)}
   .rail li.now{border-color:var(--red)}
-  .rail .label{margin-top:10px}
+  .ik-rail-label{margin-top:10px}
 
   section.step{padding:70px 0 20px;border-bottom:1px solid var(--rule)}
   section.step:last-of-type{border-bottom:0}
-  .step h2{font-family:var(--display);font-weight:400;font-size:clamp(34px,4.2vw,52px);line-height:1;letter-spacing:-.015em;margin:12px 0 14px}
+  .step h2{margin:12px 0 14px}
   .step > p{color:var(--muted);margin:0 0 34px;max-width:36em;font-size:18px}
 
   .f{margin:0 0 24px}
   .f label,.f legend{display:block;font-weight:700;margin:0 0 6px;padding:0}
   .f .hint{display:block;font-weight:400;color:var(--muted);font-size:15px;margin:0 0 8px}
   .f input[type=text],.f input[type=email],.f input[type=url],.f input[type=tel],.f textarea,.f select{
-    width:100%;font:inherit;color:var(--ink);background:var(--white);border:1px solid var(--ink);border-radius:0;padding:12px 14px}
+    width:100%;font:inherit;color:var(--ink);background:var(--white);border:1px solid var(--ink);padding:12px 14px}
   .f select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230f0f0f' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
   .f textarea{min-height:120px;resize:vertical}
   .f input:focus,.f textarea:focus,.f select:focus{outline:2px solid var(--red);outline-offset:0;border-color:var(--red)}
@@ -90,25 +75,25 @@
   .rank li span{font-family:var(--display);font-size:18px;width:28px;flex:none;color:var(--red)}
 
   .actions{margin-top:40px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-  button.primary{font:inherit;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:14px;background:var(--red);color:var(--ground);border:1px solid var(--red);border-radius:0;padding:16px 26px;cursor:pointer}
-  button.primary:hover{background:var(--ink);border-color:var(--ink)}
-  button.primary:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-  button.primary[disabled]{opacity:.6;cursor:progress}
-  .fine{font-size:15px;color:var(--muted)}
+  .actions .fine{margin-top:0}
+  .btn[disabled]{cursor:progress}
 
   .status{margin-top:18px;padding:14px 16px;border-left:2px solid var(--red);background:var(--white);display:none}
   .status.err{display:block}
   .status.ok{display:block;border-color:var(--ink)}
 
-  /* inverted done state — ink ground, cream type, rust accent */
-  .done{display:none;background:var(--ink);color:var(--ground);padding:clamp(34px,4vw,56px);margin-top:40px}
-  .done .mark{color:var(--ground)}
-  .done .mark b{color:var(--red)}
-  .done h2{font-family:var(--display);font-weight:400;font-size:clamp(34px,5.6vw,76px);line-height:1;letter-spacing:-.02em;margin:26px 0 20px}
-  .done p{color:var(--ground);opacity:.85;max-width:34em;margin:0 0 12px}
-  .done hr{border:0;border-top:1px solid rgba(244,242,238,.25);margin:26px 0 18px}
-  .done a{color:var(--ground);border-color:var(--red)}
-  .done .caps{color:var(--red)}
+  /* inverted done state — ink ground, cream type, crimson accent.
+     Named ik-done, not done: the rail marks finished segments with .done and a
+     bare .done{display:none} was hiding them. */
+  .ik-done{display:none;background:var(--ink);color:var(--ground);padding:clamp(34px,4vw,56px);margin-top:40px}
+  .ik-done .wordmark{color:var(--ground)}
+  .ik-done .wordmark em{color:var(--red)}
+  .ik-done h2{font-size:clamp(34px,5.6vw,76px);margin:26px 0 20px}
+  .ik-done p{color:var(--ground);opacity:.85;max-width:34em;margin:0 0 12px}
+  .ik-done hr{border:0;border-top:1px solid rgba(244,242,238,.25);margin:26px 0 18px}
+  .ik-done a{color:var(--ground);border-bottom:2px solid var(--red);padding-bottom:2px}
+  .ik-done a:hover{color:var(--red);border-bottom-color:var(--ground)}
+  .ik-done .eyebrow{color:var(--red)}
 
   footer{border-top:1px solid var(--ink);margin-top:90px;padding:26px 0 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
   .honey{position:absolute;left:-9999px}
@@ -117,30 +102,30 @@
 </head>
 <body>
 <main class="wrap">
-  <a class="mark" href="/" aria-label="Fight Back with AI, home">
-    <svg viewBox="0 0 120 200" aria-hidden="true"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
-    FIGHT BACK WITH <b>AI</b>
+  <a class="wordmark wordmark-red" href="/" aria-label="Fight Back with AI, home">
+    <svg class="bolt" viewBox="0 0 120 200" aria-hidden="true"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
+    <span>FIGHT BACK WITH <em>AI</em></span>
   </a>
 
-  <header class="col">
-    <span class="caps">Productize + Automate · Intake</span>
+  <header class="ik-col">
+    <span class="eyebrow">Productize + Automate · Intake</span>
     <h1>Show Me the Mess. <span>I'll Make the Plan.</span></h1>
     <p>Don't clean anything up first. The half-built course, the scattered files, the thing you've meant to finish for two years. That's the raw material.</p>
     <p class="ink">You get a first-pass analysis and roadmap back before we ever get on a call.</p>
     <p class="ink">The first ten consultants get the full engagement at no charge. In return I publish your results, and you leave me an honest, detailed review on LinkedIn.</p>
-    <span class="caps meta">About 20 minutes · No save-as-you-go · Finish in one sitting</span>
+    <span class="meta">About 20 minutes · No save-as-you-go · Finish in one sitting</span>
   </header>
 
   <nav class="rail" aria-label="Progress">
     <ol id="rail"><li class="now"></li><li></li><li></li><li></li><li></li></ol>
-    <div class="label caps meta" id="railLabel">1 of 5 · You and Your Business</div>
+    <div class="ik-rail-label meta" id="railLabel">1 of 5 · You and Your Business</div>
   </nav>
 
-  <form id="intake" class="col" novalidate>
+  <form id="intake" class="ik-col" novalidate>
     <input class="honey" type="text" name="company_fax" tabindex="-1" autocomplete="off" aria-hidden="true">
 
     <section class="step" data-step="1">
-      <span class="caps">Step 1 of 5</span>
+      <span class="eyebrow">Step 1 of 5</span>
       <h2>You and Your Business</h2>
       <p>The basics, plus what you actually do for people.</p>
 
@@ -183,7 +168,7 @@
     </section>
 
     <section class="step" data-step="2">
-      <span class="caps">Step 2 of 5</span>
+      <span class="eyebrow">Step 2 of 5</span>
       <h2>Your Files and Your IP</h2>
       <p>Where everything lives and what's buried in it.</p>
 
@@ -233,7 +218,7 @@
     </section>
 
     <section class="step" data-step="3">
-      <span class="caps">Step 3 of 5</span>
+      <span class="eyebrow">Step 3 of 5</span>
       <h2>Your Time</h2>
       <p>What eats the week. Honest, not aspirational.</p>
 
@@ -294,7 +279,7 @@
     </section>
 
     <section class="step" data-step="4">
-      <span class="caps">Step 4 of 5</span>
+      <span class="eyebrow">Step 4 of 5</span>
       <h2>Money and Where This Goes</h2>
       <p>What you'd sell if hours weren't the limit.</p>
 
@@ -323,7 +308,7 @@
     </section>
 
     <section class="step" data-step="5">
-      <span class="caps">Step 5 of 5</span>
+      <span class="eyebrow">Step 5 of 5</span>
       <h2>Access and the Call</h2>
       <p>I build in your accounts, on your subscriptions. You own everything.</p>
 
@@ -363,32 +348,32 @@
       </div>
 
       <div class="actions">
-        <button type="submit" class="primary" id="submitBtn">Send My Intake</button>
+        <button type="submit" class="btn" id="submitBtn">Send My Intake</button>
         <span class="fine">Goes straight to Matt. You'll hear back within two business days.</span>
       </div>
       <div class="status" id="status" role="status" aria-live="polite"></div>
     </section>
   </form>
 
-  <section class="done col" id="done">
-    <span class="mark" aria-hidden="true">
-      <svg viewBox="0 0 120 200"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
-      FIGHT BACK WITH <b>AI</b>
+  <section class="ik-done ik-col" id="done">
+    <span class="wordmark" aria-hidden="true">
+      <svg class="bolt" viewBox="0 0 120 200"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
+      <span>FIGHT BACK WITH <em>AI</em></span>
     </span>
     <h2>Got It.</h2>
     <p>Your answers are in. I'll read everything, run the first-pass analysis, and text you to set up the call.</p>
     <p>If you said yes to the time log, start it tomorrow morning.</p>
     <hr>
-    <span class="caps">Questions in the meantime</span>
+    <span class="eyebrow">Questions in the meantime</span>
     <p style="margin-top:8px"><a href="mailto:hello@6signal.co">hello@6signal.co</a></p>
   </section>
 
   <footer>
-    <span class="mark" aria-hidden="true">
-      <svg viewBox="0 0 120 200"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
-      FIGHT BACK WITH <b>AI</b>
+    <span class="wordmark" aria-hidden="true">
+      <svg class="bolt" viewBox="0 0 120 200"><path d="M76 12 L26 108 L58 108 L44 188 L100 84 L66 84 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/></svg>
+      <span>FIGHT BACK WITH <em>AI</em></span>
     </span>
-    <span class="caps meta">Matt Vincent Walker · Fort Worth, Texas</span>
+    <span class="meta">Matt Vincent Walker · Fort Worth, Texas</span>
   </footer>
 </main>
 
